@@ -15,20 +15,20 @@ const getcarouselInner = document.getElementById("carouselInner");
 const API_KEY = "live_2xxAszMKX5pmC4S7gi9nDqxhZHwQUDoNTMu3CCeH3PJc73gXkIBEym1zWO3e61cj";
 
 axios.defaults.headers.common["x-api-key"] =
-    "live_2xxAszMKX5pmC4S7gi9nDqxhZHwQUDoNTMu3CCeH3PJc73gXkIBEym1zWO3e61cj";
+  "live_2xxAszMKX5pmC4S7gi9nDqxhZHwQUDoNTMu3CCeH3PJc73gXkIBEym1zWO3e61cj";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append(
-    "x-api-key",
-    "live_2xxAszMKX5pmC4S7gi9nDqxhZHwQUDoNTMu3CCeH3PJc73gXkIBEym1zWO3e61cj"
+  "x-api-key",
+  "live_2xxAszMKX5pmC4S7gi9nDqxhZHwQUDoNTMu3CCeH3PJc73gXkIBEym1zWO3e61cj"
 );
 
 var requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
 };
 /**
  * 1. Create an async function "initialLoad" that does the following:
@@ -38,33 +38,33 @@ var requestOptions = {
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-(async function initialLoad() {
-  try {
-    const response = await fetch(
-      "https://api.thecatapi.com/v1/breeds?limit=10&page=0",
-      requestOptions
-    );
-    console.log(response);
+// (async function initialLoad() {
+//   try {
+//     const response = await fetch(
+//       "https://api.thecatapi.com/v1/breeds?limit=10&page=0",
+//       requestOptions
+//     );
+//     console.log(response);
 
-    const jsonData = await response.json();
-    //   console.log(response);
-    console.log(jsonData);
-    for (let i = 0; i < jsonData.length; i++) {
-      let option = document.createElement("option");
-      option.setAttribute("value", jsonData[i].id);
-      option.textContent = jsonData[i].name;
-      breedSelect.appendChild(option);
-    }
+//     const jsonData = await response.json();
+//     //   console.log(response);
+//     console.log(jsonData);
+//     for (let i = 0; i < jsonData.length; i++) {
+//       let option = document.createElement("option");
+//       option.setAttribute("value", jsonData[i].id);
+//       option.textContent = jsonData[i].name;
+//       breedSelect.appendChild(option);
+//     }
 
-    // Automatically select first item and trigger handler
-    if (breedSelect.options.length > 0) {
-      breedSelect.selectedIndex = 0;
-      handleGetBreedInfo({ target: breedSelect }); // manually call handler
-    }
-  } catch (error) {
-    console.error(error.message);
-  }
-})();
+//     // Automatically select first item and trigger handler
+//     if (breedSelect.options.length > 0) {
+//       breedSelect.selectedIndex = 0;
+//       handleGetBreedInfo({ target: breedSelect }); // manually call handler
+//     }
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// })();
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
@@ -83,42 +83,43 @@ var requestOptions = {
 
 
 
-breedSelect.addEventListener("change", handleGetBreedInfo);
+// breedSelect.addEventListener("change", handleGetBreedInfo);
 
-async function handleGetBreedInfo(event) {
-  try {
-    console.log("you called me", event.target.value);
-    Carousel.start();
-    const response = await fetch(
-      `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=3`,
-      requestOptions
-    );
-    const jsonData = await response.json();
-    // Clear previous paragraphs
-    Carousel.clear();
-    console.log(jsonData, jsonData.length);
-    for (let i = 0; i < jsonData.length; i++) {
-      let img = Carousel.createCarouselItem(
-        jsonData[i].url,
-        jsonData[i].breeds[0].name,
-        jsonData[i].id
-      );
-      Carousel.appendCarousel(img);
-    }
-    const res = await fetch(
-      `https://api.thecatapi.com/v1/breeds/${event.target.value}`,
-      requestOptions
-    );
-    const jData = await res.json();
-    infoDump.innerHTML = "";
-    let p = document.createElement("p");
-    p.textContent = jData.description;
-    // Carousel.appendCarousel(p);
-    infoDump.appendChild(p);
-  } catch (error) {
-    console.error(error.message);
-  }
-}
+// async function handleGetBreedInfo(event) {
+//   try {
+//     console.log("you called me", event.target.value);
+//     const response = await fetch(
+//       `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=5`,
+//       requestOptions
+//     );
+//     const jsonData = await response.json();
+//     // Clear previous paragraphs
+//     Carousel.clear();
+//     console.log(jsonData, jsonData.length);
+//     for (let i = 0; i < jsonData.length; i++) {
+//       let img = Carousel.createCarouselItem(
+//         jsonData[i].url,
+//         jsonData[i].breeds[0].name,
+//         jsonData[i].id
+//       );
+//       Carousel.appendCarousel(img);
+//       Carousel.start();
+//     }
+//     const res = await fetch(
+//       `https://api.thecatapi.com/v1/breeds/${event.target.value}`,
+//       requestOptions
+//     );
+//     const jData = await res.json();
+//     infoDump.innerHTML = "";
+//     let p = document.createElement("p");
+//     p.textContent = jData.description;
+//     // Carousel.appendCarousel(p);
+//     infoDump.appendChild(p);
+//   } catch (error) {
+//     console.error(error.message);
+//   }
+// }
+
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -132,62 +133,63 @@ async function handleGetBreedInfo(event) {
  *   send it manually with all of your requests! You can also set a default base URL!
  */
 
-// (async function initialLoad() {
-//     try {
-//         const response = await axios.get(
-//             "https://api.thecatapi.com/v1/breeds?limit=10&page=0"
-//         );
-//         for (let i = 0; i < response.data.length; i++) {
-//             let option = document.createElement("option");
-//             option.setAttribute("value", response.data[i].id);
-//             option.textContent = response.data[i].name;
-//             breedSelect.appendChild(option);
-//         }
+(async function initialLoad() {
+    try {
+        const response = await axios.get(
+            "https://api.thecatapi.com/v1/breeds"
+          // ?limit=10&page=0
+        );
+        for (let i = 0; i < response.data.length; i++) {
+            let option = document.createElement("option");
+            option.setAttribute("value", response.data[i].id);
+            option.textContent = response.data[i].name;
+            breedSelect.appendChild(option);
+        }
 
-//         // Automatically select first item and trigger handler
-//         if (breedSelect.options.length > 0) {
-//             breedSelect.selectedIndex = 0;
-//             handleGetBreedInfo({ target: breedSelect }); // manually call handler
-//         }
-//     } catch (error) {
-//         console.error(error.message);
-//     }
-// })();
+        // Automatically select first item and trigger handler
+        if (breedSelect.options.length > 0) {
+            breedSelect.selectedIndex = 0;
+            handleGetBreedInfo({ target: breedSelect }); // manually call handler
+        }
+    } catch (error) {
+        console.error(error.message);
+    }
+})();
 
-// breedSelect.addEventListener("change", handleGetBreedInfo);
+breedSelect.addEventListener("change", handleGetBreedInfo);
 
-// async function handleGetBreedInfo(event) {
-//     try {
-//         Carousel.start();
-//         const response = await axios(
-//             `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=3`,
-//             {
-//                 onDownloadProgress: updateProgess
-//             }
-//         );
-//         // Clear previous paragraphs
-//         Carousel.clear();
-//         for (let i = 0; i < response.data.length; i++) {
-//             let img = Carousel.createCarouselItem(
-//                 response.data[i].url,
-//                 response.data[i].breeds[0].name,
-//                 response.data[i].id
-//             );
-//             Carousel.appendCarousel(img);
-//         }
-//         const res = await axios(
-//             `https://api.thecatapi.com/v1/breeds/${event.target.value}`
-//         );
-//         infoDump.innerHTML = "";
-//         let p = document.createElement("p");
-//         p.textContent = res.data.description;
-//         infoDump.appendChild(p);
-//         progressBar.style.width = "100%";
-//     } catch (error) {
-//         console.error(error.message);
-//         progressBar.style.width = "0%";
-//     }
-// }
+async function handleGetBreedInfo(event) {
+    try {
+        const response = await axios(
+            `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=5`,
+            {
+                onDownloadProgress: updateProgess
+            }
+        );
+        // Clear previous paragraphs
+        Carousel.clear();
+        for (let i = 0; i < response.data.length; i++) {
+            let img = Carousel.createCarouselItem(
+                response.data[i].url,
+                response.data[i].breeds[0].name,
+                response.data[i].id
+            );
+            Carousel.appendCarousel(img);
+          Carousel.start();
+        }
+        const res = await axios(
+            `https://api.thecatapi.com/v1/breeds/${event.target.value}`
+        );
+        infoDump.innerHTML = "";
+        let p = document.createElement("p");
+        p.textContent = res.data.description;
+        infoDump.appendChild(p);
+        progressBar.style.width = "100%";
+    } catch (error) {
+        console.error(error.message);
+        progressBar.style.width = "0%";
+    }
+}
 
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
@@ -196,46 +198,46 @@ async function handleGetBreedInfo(event) {
  * - As an added challenge, try to do this on your own without referencing the lesson material.
  */
 axios.interceptors.request.use(request => {
-    if (progressBar) {
-        progressBar.style.width = "0%";
-        let body = document.querySelector("body");
-        body.style.cursor = "progress"; // show loading cursor
+  if (progressBar) {
+    progressBar.style.width = "0%";
+    let body = document.querySelector("body");
+    body.style.cursor = "progress"; // show loading cursor
 
-    }
-   
-    request.metadata = request.metadata || {};
-    request.metadata.startTime = new Date().getTime();
-    return request;
+  }
+
+  request.metadata = request.metadata || {};
+  request.metadata.startTime = new Date().getTime();
+  return request;
 });
 
 
 axios.interceptors.response.use((response) => {
-    if (progressBar) {
-        progressBar.style.width = "100%";
-        let body = document.querySelector("body");
-        body.style.cursor = "default"; // reset cursor
-    }
-    
-    response.config.metadata.endTime = new Date().getTime();
-    response.config.metadata.durationInMS = response.config.metadata.endTime - response.config.metadata.startTime;
+  if (progressBar) {
+    progressBar.style.width = "100%";
+    let body = document.querySelector("body");
+    body.style.cursor = "default"; // reset cursor
+  }
 
-    console.log(`Request took ${response.config.metadata.durationInMS} milliseconds.`)
-    return response;
+  response.config.metadata.endTime = new Date().getTime();
+  response.config.metadata.durationInMS = response.config.metadata.endTime - response.config.metadata.startTime;
+
+  console.log(`Request took ${response.config.metadata.durationInMS} milliseconds.`)
+  return response;
 },
-    (error) => {
-        if (progressBar) {
-            progressBar.style.width = "100%";
-            let body = document.querySelector("body");
-            body.style.cursor = "default"; // reset cursor
+  (error) => {
+    if (progressBar) {
+      progressBar.style.width = "100%";
+      let body = document.querySelector("body");
+      body.style.cursor = "default"; // reset cursor
 
-        }
-        
-        error.config.metadata.endTime = new Date().getTime();
-        error.config.metadata.durationInMS = error.config.metadata.endTime - error.config.metadata.startTime;
+    }
 
-        console.log(`Request took ${error.config.metadata.durationInMS} milliseconds.`)
-        throw error;
-    });
+    error.config.metadata.endTime = new Date().getTime();
+    error.config.metadata.durationInMS = error.config.metadata.endTime - error.config.metadata.startTime;
+
+    console.log(`Request took ${error.config.metadata.durationInMS} milliseconds.`)
+    throw error;
+  });
 /**
  * 6. Next, we'll create a progress bar to indicate the request is in progress.
  * - The progressBar element has already been created for you.
@@ -251,13 +253,13 @@ axios.interceptors.response.use((response) => {
  *   once or twice per request to this API. This is still a concept worth familiarizing yourself
  *   with for future projects.
  */
-function updateProgess (progressEvent) {
-    console.log(progressEvent);
-    const { loaded, total } = progressEvent;
-    if (total) {
-        const percent = Math.floor((loaded / total) * 100);
-        progressBar.style.width = percent + "%";
-    }
+function updateProgess(progressEvent) {
+  console.log(progressEvent);
+  const { loaded, total } = progressEvent;
+  if (total) {
+    const percent = Math.floor((loaded / total) * 100);
+    progressBar.style.width = percent + "%";
+  }
 }
 /**
  * 7. As a final element of progress indication, add the following to your axios interceptors:
@@ -276,32 +278,32 @@ function updateProgess (progressEvent) {
  * - You can call this function by clicking on the heart at the top right of any image.
  */
 export async function favourite(imgId) {
-    // your code here
-    console.log("img Id is", imgId);
-    try {
-        let existRes = await axios.get("https://api.thecatapi.com/v1/favourites", {
-            params: { image_id: imgId }
-        });
-        console.log("existing fav is", existRes.data);
-        // if image is already favorited then delete it
-        if (existRes.data.length > 0) {
-            console.log("I am deleting");
-            await axios.delete(
-                `https://api.thecatapi.com/v1/favourites/${existRes.data[0].id}`
-            );
-        } else {
-            console.log("I am posting");
-            const response = await axios.post(
-                "https://api.thecatapi.com/v1/favourites",
-                { image_id: imgId }
-            );
-        }
-
-        progressBar.style.width = "100%";
-    } catch (error) {
-        console.error(error.message);
-        progressBar.style.width = "0%";
+  // your code here
+  console.log("img Id is", imgId);
+  try {
+    let existRes = await axios.get("https://api.thecatapi.com/v1/favourites", {
+      params: { image_id: imgId }
+    });
+    console.log("existing fav is", existRes.data);
+    // if image is already favorited then delete it
+    if (existRes.data.length > 0) {
+      console.log("I am deleting", existRes.data[0].id);
+      await axios.delete(
+        `https://api.thecatapi.com/v1/favourites/${existRes.data[0].id}`
+      );
+    } else {
+      console.log("I am posting");
+      const response = await axios.post(
+        "https://api.thecatapi.com/v1/favourites",
+        { image_id: imgId }
+      );
     }
+
+    progressBar.style.width = "100%";
+  } catch (error) {
+    console.error(error.message);
+    progressBar.style.width = "0%";
+  }
 }
 
 /**
@@ -313,6 +315,29 @@ export async function favourite(imgId) {
  *    If that isn't in its own function, maybe it should be so you don't have to
  *    repeat yourself in this section.
  */
+getFavouritesBtn.addEventListener("click", getFavourites);
+
+async function getFavourites(event) {
+  try {
+    
+    infoDump.innerHTML = "";
+    let existRes = await axios.get("https://api.thecatapi.com/v1/favourites");
+    console.log("fav list is", existRes.data);
+    Carousel.clear();
+    
+    for (let i = 0; i < existRes.data.length; i++) {
+      console.log("url is", existRes.data[i].image.url);
+      console.log("image id is", existRes.data[i].image_id);
+
+      let img = Carousel.createCarouselItem(existRes.data[i].image.url, "Fav Cat", existRes.data[i].image_id)
+      Carousel.appendCarousel(img);
+      Carousel.start();
+    }
+  }
+  catch (error) {
+    console.error(error.message);
+  }
+}
 
 /**
  * 10. Test your site, thoroughly!
