@@ -41,7 +41,7 @@ var requestOptions = {
 // (async function initialLoad() {
 //   try {
 //     const response = await fetch(
-//       "https://api.thecatapi.com/v1/breeds?limit=10&page=0",
+//       "https://api.thecatapi.com/v1/breeds",
 //       requestOptions
 //     );
 //     console.log(response);
@@ -137,7 +137,6 @@ var requestOptions = {
     try {
         const response = await axios.get(
             "https://api.thecatapi.com/v1/breeds"
-          // ?limit=10&page=0
         );
         for (let i = 0; i < response.data.length; i++) {
             let option = document.createElement("option");
