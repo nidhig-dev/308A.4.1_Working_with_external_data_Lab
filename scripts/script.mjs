@@ -38,33 +38,33 @@ var requestOptions = {
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-// (async function initialLoad() {
-//   try {
-//     const response = await fetch(
-//       "https://api.thecatapi.com/v1/breeds?limit=10&page=0",
-//       requestOptions
-//     );
-//     console.log(response);
+(async function initialLoad() {
+  try {
+    const response = await fetch(
+      "https://api.thecatapi.com/v1/breeds?limit=10&page=0",
+      requestOptions
+    );
+    console.log(response);
 
-//     const jsonData = await response.json();
-//     //   console.log(response);
-//     console.log(jsonData);
-//     for (let i = 0; i < jsonData.length; i++) {
-//       let option = document.createElement("option");
-//       option.setAttribute("value", jsonData[i].id);
-//       option.textContent = jsonData[i].name;
-//       breedSelect.appendChild(option);
-//     }
+    const jsonData = await response.json();
+    //   console.log(response);
+    console.log(jsonData);
+    for (let i = 0; i < jsonData.length; i++) {
+      let option = document.createElement("option");
+      option.setAttribute("value", jsonData[i].id);
+      option.textContent = jsonData[i].name;
+      breedSelect.appendChild(option);
+    }
 
-//     // Automatically select first item and trigger handler
-//     if (breedSelect.options.length > 0) {
-//       breedSelect.selectedIndex = 0;
-//       handleGetBreedInfo({ target: breedSelect }); // manually call handler
-//     }
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// })();
+    // Automatically select first item and trigger handler
+    if (breedSelect.options.length > 0) {
+      breedSelect.selectedIndex = 0;
+      handleGetBreedInfo({ target: breedSelect }); // manually call handler
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
+})();
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
@@ -80,42 +80,45 @@ var requestOptions = {
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
-// breedSelect.addEventListener("change", handleGetBreedInfo);
 
-// async function handleGetBreedInfo(event) {
-//   try {
-//     console.log("you called me", event.target.value);
-//     Carousel.start();
-//     const response = await fetch(
-//       `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=3`,
-//       requestOptions
-//     );
-//     const jsonData = await response.json();
-//     // Clear previous paragraphs
-//     Carousel.clear();
-//     console.log(jsonData, jsonData.length);
-//     for (let i = 0; i < jsonData.length; i++) {
-//       let img = Carousel.createCarouselItem(
-//         jsonData[i].url,
-//         "",
-//         jsonData[i].id
-//       );
-//       Carousel.appendCarousel(img);
-//     }
-//     const res = await fetch(
-//       `https://api.thecatapi.com/v1/breeds/${event.target.value}`,
-//       requestOptions
-//     );
-//     const jData = await res.json();
-//     infoDump.innerHTML = "";
-//     let p = document.createElement("p");
-//     p.textContent = jData.description;
-//     // Carousel.appendCarousel(p);
-//     infoDump.appendChild(p);
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// }
+
+
+breedSelect.addEventListener("change", handleGetBreedInfo);
+
+async function handleGetBreedInfo(event) {
+  try {
+    console.log("you called me", event.target.value);
+    Carousel.start();
+    const response = await fetch(
+      `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=3`,
+      requestOptions
+    );
+    const jsonData = await response.json();
+    // Clear previous paragraphs
+    Carousel.clear();
+    console.log(jsonData, jsonData.length);
+    for (let i = 0; i < jsonData.length; i++) {
+      let img = Carousel.createCarouselItem(
+        jsonData[i].url,
+        jsonData[i].breeds[0].name,
+        jsonData[i].id
+      );
+      Carousel.appendCarousel(img);
+    }
+    const res = await fetch(
+      `https://api.thecatapi.com/v1/breeds/${event.target.value}`,
+      requestOptions
+    );
+    const jData = await res.json();
+    infoDump.innerHTML = "";
+    let p = document.createElement("p");
+    p.textContent = jData.description;
+    // Carousel.appendCarousel(p);
+    infoDump.appendChild(p);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -129,62 +132,62 @@ var requestOptions = {
  *   send it manually with all of your requests! You can also set a default base URL!
  */
 
-(async function initialLoad() {
-    try {
-        const response = await axios.get(
-            "https://api.thecatapi.com/v1/breeds?limit=10&page=0"
-        );
-        for (let i = 0; i < response.data.length; i++) {
-            let option = document.createElement("option");
-            option.setAttribute("value", response.data[i].id);
-            option.textContent = response.data[i].name;
-            breedSelect.appendChild(option);
-        }
+// (async function initialLoad() {
+//     try {
+//         const response = await axios.get(
+//             "https://api.thecatapi.com/v1/breeds?limit=10&page=0"
+//         );
+//         for (let i = 0; i < response.data.length; i++) {
+//             let option = document.createElement("option");
+//             option.setAttribute("value", response.data[i].id);
+//             option.textContent = response.data[i].name;
+//             breedSelect.appendChild(option);
+//         }
 
-        // Automatically select first item and trigger handler
-        if (breedSelect.options.length > 0) {
-            breedSelect.selectedIndex = 0;
-            handleGetBreedInfo({ target: breedSelect }); // manually call handler
-        }
-    } catch (error) {
-        console.error(error.message);
-    }
-})();
+//         // Automatically select first item and trigger handler
+//         if (breedSelect.options.length > 0) {
+//             breedSelect.selectedIndex = 0;
+//             handleGetBreedInfo({ target: breedSelect }); // manually call handler
+//         }
+//     } catch (error) {
+//         console.error(error.message);
+//     }
+// })();
 
-breedSelect.addEventListener("change", handleGetBreedInfo);
+// breedSelect.addEventListener("change", handleGetBreedInfo);
 
-async function handleGetBreedInfo(event) {
-    try {
-        Carousel.start();
-        const response = await axios(
-            `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=3`,
-            {
-                onDownloadProgress: updateProgess
-            }
-        );
-        // Clear previous paragraphs
-        Carousel.clear();
-        for (let i = 0; i < response.data.length; i++) {
-            let img = Carousel.createCarouselItem(
-                response.data[i].url,
-                "",
-                response.data[i].id
-            );
-            Carousel.appendCarousel(img);
-        }
-        const res = await axios(
-            `https://api.thecatapi.com/v1/breeds/${event.target.value}`
-        );
-        infoDump.innerHTML = "";
-        let p = document.createElement("p");
-        p.textContent = res.data.description;
-        infoDump.appendChild(p);
-        progressBar.style.width = "100%";
-    } catch (error) {
-        console.error(error.message);
-        progressBar.style.width = "0%";
-    }
-}
+// async function handleGetBreedInfo(event) {
+//     try {
+//         Carousel.start();
+//         const response = await axios(
+//             `https://api.thecatapi.com/v1/images/search?breed_id=${event.target.value}&limit=3`,
+//             {
+//                 onDownloadProgress: updateProgess
+//             }
+//         );
+//         // Clear previous paragraphs
+//         Carousel.clear();
+//         for (let i = 0; i < response.data.length; i++) {
+//             let img = Carousel.createCarouselItem(
+//                 response.data[i].url,
+//                 response.data[i].breeds[0].name,
+//                 response.data[i].id
+//             );
+//             Carousel.appendCarousel(img);
+//         }
+//         const res = await axios(
+//             `https://api.thecatapi.com/v1/breeds/${event.target.value}`
+//         );
+//         infoDump.innerHTML = "";
+//         let p = document.createElement("p");
+//         p.textContent = res.data.description;
+//         infoDump.appendChild(p);
+//         progressBar.style.width = "100%";
+//     } catch (error) {
+//         console.error(error.message);
+//         progressBar.style.width = "0%";
+//     }
+// }
 
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
